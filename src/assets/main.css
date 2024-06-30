@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  width: 100vw;
+  background-attachment: fixed;
+  font-family: 'Space Mono', monospace;
+  background-color: #191712;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: #00bd7e;
+  transition: 0.4s;
+  padding: 3px;
+}
+
+.hide {
+  display: none !important;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex.center {
+  align-items: center;
+}
+
+.red {
+  outline: 2px solid #ff00006b;
+}
+
+.gap {
+  gap: 1rem;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+@media (min-width: 1024px) {
+}
