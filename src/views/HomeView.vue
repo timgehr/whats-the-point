@@ -30,6 +30,7 @@ import AddModal from '@/components/AddModal.vue'
   }
   .row {
     font-size: 1.5rem;
+    min-height: 30px;
     height: 50px;
     border: 3px solid #0a0807;
     width: 100%;
@@ -66,6 +67,7 @@ import AddModal from '@/components/AddModal.vue'
     height: 50px;
     width: 50px;
     font-size: 1.5rem !important;
+    border: 3px solid #0a0807;
   }
 }
 </style>

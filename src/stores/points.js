@@ -1,36 +1,28 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-
+import { Service } from '@/service'
+const service = new Service()
 export const usePointStore = defineStore('points', () => {
-  const points = ref([
-    { id: 1, x: 0, y: 0, name: 'origin' },
-    { id: 2, x: 1, y: -1, name: 'test' },
-    { id: 3, x: 0, y: 0, name: 'origin1' },
-    { id: 4, x: 1, y: -1, name: 'test2' },
-    { id: 5, x: 0, y: 0, name: 'origin' },
-    { id: 6, x: 1, y: -1, name: 'test' },
-    { id: 7, x: 0, y: 0, name: 'origin' },
-    { id: 8, x: 1, y: -1, name: 'test' },
-    { id: 9, x: 0, y: 0, name: 'origin' },
-    { id: 10, x: 1, y: -1, name: 'test' },
-    { id: 11, x: 0, y: 0, name: 'origin' },
-    { id: 12, x: 1, y: -1, name: 'test' }
-  ])
-  function addPoint(point) {
-    points.value.push({ x: point.x, y: point.y, name: point.name })
+  const points = ref([])
+  async function addPoint(point) {
+    await service.addPoint(point).then((response) => {
+      points.value = response.data
+    }).catch((error) => console.log(error))
   }
-  function savePoint(point) {
-    for (let _point of points.value) {
-      if (_point.id === point.id) {
-        _point.x = point.x
-        _point.y = point.y
-        _point.name = point.name
-      }
-    }
+  async function savePoint(point) {
+    await service.savePoint(point).then((response) => {
+      points.value = response.data
+    }).catch((error) => console.log(error))
   }
-  function deletePoint(point) {
-    points.value = points.value.filter((_point) => _point.id !== point.id)
+  async function deletePoint(point) {
+    await service.deletePoint(point).then((response) => {
+      points.value = response.data
+    }).catch((error) => console.log(error))
+  }
+  async function initPoints() {
+    let _points = await service.getPoints().catch((error) => console.log(error))
+    points.value = _points
   }
 
-  return { points, addPoint, savePoint, deletePoint }
+  return { points, addPoint, savePoint, deletePoint, initPoints }
 })

@@ -18,7 +18,7 @@
             <input
               type="text"
               id="name"
-              :class="points?.find((p) => p.name === point.name) ? 'red' : ''"
+              :class="pointStore.points?.find((p) => p.name === point.name) ? 'red' : ''"
               v-model="point.name"
               required
             />
@@ -56,7 +56,7 @@
 
 <script setup>
 import ClosestPoints from './ClosestPoints.vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useModalStore } from '../stores/modals'
 import { usePointStore } from '../stores/points'
 const modalStore = useModalStore()
@@ -68,6 +68,7 @@ const toggleModal = modalStore.toggleModal
 const points = ref(pointStore.points || [])
 const showModal = ref(false)
 const modalType = ref(null)
+
 modalStore.$subscribe((value, state) => {
   modalType.value = value.events.target.add ? 'add' : value.events.target.edit ? 'edit' : ''
   showModal.value = value.events.target.add || value.events.target.edit
@@ -76,7 +77,7 @@ modalStore.$subscribe((value, state) => {
 })
 
 const addSavePoint = () => {
-  if (points.value?.find((p) => p.name === point.value.name)) {
+  if (pointStore.points?.find((p) => p.name === point.value.name)) {
     alert('That point name already exists, please use a different name')
     return
   }
@@ -140,12 +141,15 @@ const deletePoint = () => {
   max-width: 500px;
   width: 90%;
   border: 2px solid #0b0806;
-  height: 270px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .modal-content h1 {
   width: 100%;
   text-align: center;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 .modal-content label {
   font-weight: bold;
@@ -175,6 +179,7 @@ label {
 }
 
 input {
+  font: inherit;
   margin-bottom: 10px;
   min-width: 0px;
 }

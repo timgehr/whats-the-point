@@ -1,8 +1,13 @@
 <template>
   <div class="nearest-furthest-points">
     <div class="nearest-furthest-table">
-      Nearest point{{ nearestPoints?.points.length > 1 ? 's' : '' }} at distance
-      {{ nearestPoints?.distance }}
+      {{
+        nearestPoints?.points.legnth > 0
+          ? 'Nearest point' + nearestPoints?.points.length > 1
+            ? 's'
+            : '' + ' at distance' + nearestPoints?.distance
+          : 'No other points exist'
+      }}
       <div class="table">
         <div class="labels">
           <div class="label">Name</div>
@@ -25,8 +30,13 @@
       </div>
     </div>
     <div class="nearest-furthest-table">
-      Furthest point{{ furthestPoints?.points.length > 1 ? 's' : '' }} at distance
-      {{ furthestPoints?.distance }}
+      {{
+        furthestPoints?.points.legnth > 0
+          ? 'Nearest point' + furthestPoints?.points.length > 1
+            ? 's'
+            : '' + ' at distance' + furthestPoints?.distance
+          : 'No other points exist'
+      }}
       <div class="table">
         <div class="labels">
           <div class="label">Name</div>
@@ -65,11 +75,11 @@ const nearestPoints = ref(null)
 const furthestPoints = ref(null)
 
 const calculateNearestPoint = () => {
-  let _nearestPoints = null
+  let _nearestPoints = []
   let minDistance = Infinity
-  for (const point of points.value) {
+  for (const point of store.points) {
     const distance = calculateEuclideanDistance(point, newPoint.value)
-    if (distance < minDistance) {
+    if (distance < minDistance && point.id !== newPoint.value.id) {
       minDistance = distance
       _nearestPoints = []
       _nearestPoints.push({ point, distance: minDistance })
@@ -84,12 +94,12 @@ const calculateNearestPoint = () => {
 }
 
 const calculateFurthestPoint = () => {
-  let _furthestPoints = null
+  let _furthestPoints = []
   let maxDistance = -1
 
-  for (const point of points.value) {
+  for (const point of store.points) {
     const distance = calculateEuclideanDistance(point, newPoint.value)
-    if (distance > maxDistance) {
+    if (distance > maxDistance && point.id !== newPoint.value.id) {
       maxDistance = distance
       _furthestPoints = []
       _furthestPoints.push({ point, distance: maxDistance })
@@ -163,6 +173,7 @@ onMounted(() => {
 }
 .nearest-furthest-points .row {
   height: 30px;
+  min-height: 30px;
   border: solid 2px #0a0807;
 }
 .nearest-furthest-points .cell {

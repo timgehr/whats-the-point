@@ -2,11 +2,15 @@
 import { ref } from 'vue'
 import { usePointStore } from '../stores/points'
 import { useModalStore } from '../stores/modals'
-
 const pointStore = usePointStore()
 const modalStore = useModalStore()
 const toggleModal = modalStore.toggleModal
+
 const points = ref(pointStore.points)
+
+pointStore.$subscribe((value, state) => {
+  points.value = state.points
+})
 </script>
 
 <template>
@@ -16,7 +20,9 @@ const points = ref(pointStore.points)
       <div class="label">X</div>
       <div class="label">Y</div>
     </div>
+    <!-- <hr /> -->
     <div class="row-scroll">
+      <div v-if="points?.length === 0" class="row center-center">No points exist... yet!</div>
       <div
         v-for="point in points"
         v-bind:key="point.name"
@@ -70,16 +76,18 @@ const points = ref(pointStore.points)
   width: 100%;
   max-width: 1000px;
   background-color: #e8d8ce4c;
-  height: 80px;
-  font-size: 3rem;
+  min-height: 60px;
+  font-size: 2rem;
+  text-wrap: nowrap;
   display: flex;
   justify-content: center;
-  border-radius: 40px;
+  border-radius: 30px;
   border: 4px solid #0a0807;
   cursor: pointer;
   transition: background-color 0.5s, box-shadow 0.5s;
   /* box-shadow: 0px 0px 10px -2px #00000019; */
 }
+
 .row:hover {
   background-color: #e8d8ce93;
 }
@@ -88,6 +96,7 @@ const points = ref(pointStore.points)
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 .cell:nth-of-type(1),
 .cell:nth-of-type(2) {
@@ -104,6 +113,11 @@ const points = ref(pointStore.points)
   padding-left: 10px;
   margin: auto;
 }
+.table hr {
+  border: 1px solid #0a0807;
+  width: 100%;
+}
+
 .label {
   flex: 1;
   display: flex;
@@ -113,15 +127,14 @@ const points = ref(pointStore.points)
   color: #e8d8ce;
 }
 .add {
-  width: 80px;
-  max-width: 1000px;
+  width: 60px;
   background-color: #e8d8ce4c;
-  height: 80px;
+  height: 60px;
   font-size: 3rem !important;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 40px;
+  border-radius: 30px;
   border: 4px solid #0a0807;
   /* box-shadow: 0px 0px 10px -2px #e8d8ce19; */
   cursor: pointer;

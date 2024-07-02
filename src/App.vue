@@ -1,12 +1,19 @@
 <script setup>
 import { RouterView } from 'vue-router'
+import { onBeforeUpdate } from 'vue'
+import { config } from '../config'
+import { usePointStore } from './stores/points'
+import { useModalStore } from './stores/modals'
+const pointStore = usePointStore()
+
+pointStore.initPoints()
 </script>
 
 <template>
   <div class="app-wrapper">
-    <div class="header">
+    <!-- <div class="header">
       <h1>What's The Point?</h1>
-    </div>
+    </div> -->
     <RouterView />
   </div>
 </template>
@@ -21,11 +28,10 @@ import { RouterView } from 'vue-router'
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  max-height: 10000vh;
 }
 
 .header {
-  background-color: #75757539;
+  /* background-color: #75757539; */
   color: white;
   text-align: center;
   padding: 10px;
