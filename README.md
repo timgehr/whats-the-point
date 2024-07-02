@@ -1,35 +1,15 @@
 # whats-the-point
 
-This template should help get you started developing with Vue 3 in Vite.
+Howdy 🤠
 
-## Recommended IDE Setup
+pull this down and hit
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+```npm i```
 
-## Customize configuration
+then use
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+```npm run dev```
 
-## Project Setup
+to run both the web app and the development server.
 
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+Edit the db_conn_string in the config.js file to connect to your PostgreSQL db. Thank you!
